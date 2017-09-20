@@ -44,6 +44,9 @@ public class HTTPFileArg extends AbstractTestElement implements Serializable {
     /** Name used to store the file's mimetype. */
     private static final String MIMETYPE = "File.mimetype";
 
+    /** Name used to store the file to use for file */
+    private static final String FILENAME = "File.filename";
+
     /** temporary storage area for the body header. */
     private String header;
 
@@ -166,6 +169,20 @@ public class HTTPFileArg extends AbstractTestElement implements Serializable {
     }
 
     /**
+     * Get the filename (for what the file will be uploaded as).
+     * Will return path if not set.
+     * 
+     * @return the filename to use for the upload.
+     */
+    public String getFileName() {
+        String filename = getPropertyAsString(FILENAME);
+        if (filename == null || "".equals(filename)) {
+            filename = getPath();
+        }
+        return filename;
+    }
+
+    /**
      * Set the path of the File.
      *
      * @param newPath
@@ -173,6 +190,14 @@ public class HTTPFileArg extends AbstractTestElement implements Serializable {
      */
     public void setPath(String newPath) {
         setProperty(new StringProperty(FILEPATH, newPath));
+    }
+
+    /**
+     * Set the filename (for that the file will be uploaded as).
+     * @param filename
+     */
+    public void setFileName(String filename) {
+        setProperty(new StringProperty(FILENAME, filename));
     }
 
     /**
@@ -184,27 +209,27 @@ public class HTTPFileArg extends AbstractTestElement implements Serializable {
         return getPropertyAsString(FILEPATH);
     }
 
-   /**
-    * Sets the body header for the HTTPFileArg object. Header
-    * contains path, parameter name and mime type information.
-    * This is only intended for use by methods which need to store information
-    * temporarily whilst creating the HTTP body.
-    * 
-    * @param newHeader
-    *  the new Header value
-    */
-   public void setHeader(String newHeader) {
-       header = newHeader;
-   }
+    /**
+     * Sets the body header for the HTTPFileArg object. Header
+     * contains path, parameter name and mime type information.
+     * This is only intended for use by methods which need to store information
+     * temporarily whilst creating the HTTP body.
+     * 
+     * @param newHeader
+     *  the new Header value
+     */
+    public void setHeader(String newHeader) {
+        header = newHeader;
+    }
 
-   /**
-    * Gets the saved body header for the HTTPFileArg object.
-    *
-    * @return saved body header
-    */
-   public String getHeader() {
-       return header;
-   }
+    /**
+     * Gets the saved body header for the HTTPFileArg object.
+     *
+     * @return saved body header
+     */
+    public String getHeader() {
+        return header;
+    }
 
     /**
      * returns path, param name, mime type information of
@@ -217,8 +242,8 @@ public class HTTPFileArg extends AbstractTestElement implements Serializable {
     @Override
     public String toString() {
         return "path:'" + getPath()
-            + "'|param:'" + getParamName()
-            + "'|mimetype:'" + getMimeType() + "'";
+        + "'|param:'" + getParamName()
+        + "'|mimetype:'" + getMimeType() + "'";
     }
 
     /**
@@ -227,8 +252,8 @@ public class HTTPFileArg extends AbstractTestElement implements Serializable {
      */
     public boolean isNotEmpty() {
         return getPath().length() > 0
-            || getParamName().length() > 0
-            || getMimeType().length() > 0; // TODO should we allow mimetype only?
+                || getParamName().length() > 0
+                || getMimeType().length() > 0; // TODO should we allow mimetype only?
     }
 
 }

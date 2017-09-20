@@ -221,7 +221,7 @@ public class PostWriter {
                 HTTPFileArg file = files[i];
                 // Write multipart for file
                 bos = new ByteArrayOutputStream();
-                writeStartFileMultipart(bos, file.getPath(), file.getParamName(), file.getMimeType());
+                writeStartFileMultipart(bos, file.getFileName(), file.getParamName(), file.getMimeType());
                 bos.flush();
                 String header = bos.toString(contentEncoding);// TODO is this correct?
                 // If this is not the first file we can't write its header now
